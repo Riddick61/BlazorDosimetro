@@ -62,6 +62,15 @@ namespace WebDosimetro.Api.Controllers
         public async Task<ActionResult<Drug>> GetDrugById(int id)
         {
             var drug = await _drugRepository.FindById(id);
+            var drugDTO = _mapper.Map<DrugDTO>(drug);
+           
+            // what time is it now? How many days passed?
+            int diffDays = DateTime.Now.Subtract(drug.StartDate).Days;
+            int NoPillsLeft = drug.NoPills - (diffDays * drug.DoseToTake);
+            int DaysLeft = NoPillsLeft / drug.DoseToTake;
+            DateTime dateToEnd = DateTime.Now.AddDays(DaysLeft);
+            drug.DateToEnd = dateToEnd;
+
 
             if (drug == null)
             {
