@@ -1,0 +1,59 @@
+﻿@page "/drugedit"
+@page "/drugedit/{Id}"
+@inherits BlazorDosimetro.Data.DrugEditBase
+
+<section class="drug-edit">
+    @if (!Saved)
+    {
+        <h1 class="page-title">Details for @drug.Name</h1>
+
+        <EditForm Model="@drug" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group row">
+                <label for="name" class="col-sm-3">Name: </label>
+                <InputText id="name" class="form-control col-sm-8" @bind-Value="@drug.Name" placeholder="Enter last name"></InputText>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => drug.Name)" />
+            </div>
+            <div class="form-group row">
+                <label for="nopills" class="col-sm-3">Number of pills: </label>
+                <InputNumber id="nopills" class="form-control col-sm-8" @bind-Value="@drug.NoPills" placeholder="Enter quantity"></InputNumber>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => drug.NoPills)" />
+            </div>
+
+            <div class="form-group row">
+                <label for="dosetotake" class="col-sm-3">Dose: </label>
+                <InputNumber id="dosetotake" class="form-control col-sm-8" @bind-Value="@drug.DoseToTake" placeholder="Enter dose"></InputNumber>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => drug.DoseToTake)" />
+            </div>
+            <div class="form-group row">
+                <label for="startdate" class="col-sm-3">Refilled on: </label>
+                <InputDate id="startdate" class="form-control col-sm-8" @bind-Value="@drug.StartDate" placeholder="Enter date"></InputDate>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => drug.StartDate)" />
+            </div>
+            <div class="form-group row">
+                <label for="enddate" class="col-sm-3">Estimated end on: </label>
+                <InputDate id="enddate" class="form-control col-sm-8" @bind-Value="@drug.DateToEnd" placeholder="Enter date"></InputDate>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => drug.DateToEnd)" />
+            </div>
+
+            <button type="submit" class="btn btn-primary edit-btn">Save drug</button>
+            @if (drug.Id > 0)
+            {
+                <a class="btn btn-danger" @onclick="@DeleteDrug">
+                    Delete
+                </a>
+            }
+        </EditForm>
+
+    }
+    else
+    {
+        <div class="alert @StatusClass">@Message</div>
+        <a class="btn btn-outline-primary" @onclick="@NavigateToOverview">Back to overview</a>
+
+    }
+</section>
+<Confirm ConfirmationChanged="ConfirmDeleteDrug" @ref="DeleteConfirmation"
+         ConfirmationMessage=@($"Are you sure you want to delete {drug.Name}")>
+</Confirm>

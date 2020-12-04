@@ -1,0 +1,44 @@
+﻿@page "/"
+@page "/drugoverview"
+@inherits BlazorDosimetro.Data.DrugOverviewBase
+
+<h1 class="page-title">Drug repository</h1>
+@if (Drugs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Dose</th>
+                <th>Pills</th>
+                <th>Supply by</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var drug in Drugs)
+            {
+                <tr>
+                    <td>@drug.Id</td>
+                    <td>@drug.Name</td>
+                    <td>@drug.DoseToTake</td>
+                    <td>@drug.NoPills</td>
+                    <td>@drug.DateToEnd.ToShortDateString()</td>
+                    <td>
+                        <a href="@($"drugdetails/{drug.Id}")" class="btn btn-primary table-btn">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <a href="@($"drugedit/{drug.Id}")" class="btn btn-primary table-btn">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,54 @@
+﻿
+@page "/drugdetails/{Id}"
+@inherits BlazorDosimetro.Data.DrugDetailBase
+
+
+<div class="col-12 row">
+
+    <div class="col-10 row">
+        <div class="col-xs-12 col-sm-8">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Drug ID</label>
+                <div class="col-sm-8">
+                    <label type="text" class="form-control-plaintext">@drug.Id.ToString()</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@drug.Name</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Pills</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@drug.NoPills</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Taking</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@drug.DoseToTake</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Start date</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@drug.StartDate</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">End date</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@drug.DateToEnd</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
