@@ -34,14 +34,14 @@ namespace WebDosimetro.Api.Controllers
             var drugs = await _drugRepository.FindAll();
             var drugDTOs = _mapper.Map<IList<DrugDTO>>(drugs);
             List<DrugDTO> lstDrugs = new List<DrugDTO>();
+            int DaysLeft = 0;
 
             foreach (var drug in drugDTOs)
             {
                 // what time is it now? How many days passed?
                 int diffDays = DateTime.Now.Subtract(drug.StartDate).Days;
                 int NoPillsLeft = drug.NoPills - (diffDays * drug.DoseToTake);
-                int DaysLeft = NoPillsLeft / drug.DoseToTake;
-
+                DaysLeft=  drug.DoseToTake > 0? (NoPillsLeft / drug.DoseToTake) : 0;
                 DateTime dateToEnd = DateTime.Now.AddDays(DaysLeft);
                 drug.DateToEnd = dateToEnd;
                 lstDrugs.Add(_mapper.Map<DrugDTO>(drug));
