@@ -67,7 +67,7 @@ namespace WebDosimetro.Api.Controllers
             // what time is it now? How many days passed?
             int diffDays = DateTime.Now.Subtract(drug.StartDate).Days;
             int NoPillsLeft = drug.NoPills - (diffDays * drug.DoseToTake);
-            int DaysLeft = NoPillsLeft / drug.DoseToTake;
+            int DaysLeft = drug.DoseToTake == 0 ? NoPillsLeft:(NoPillsLeft / drug.DoseToTake);
             DateTime dateToEnd = DateTime.Now.AddDays(DaysLeft);
             drug.DateToEnd = dateToEnd;
 
